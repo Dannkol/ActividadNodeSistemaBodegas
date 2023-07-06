@@ -1,4 +1,4 @@
-import producto from "../models/producto";
+import producto from "../models/producto.js";
 
 const crearproducto = async (req, res) => {
 
@@ -13,16 +13,16 @@ const crearproducto = async (req, res) => {
             cantidad
         )
 
-        return (res.status(201).json({
+        return (res.json({
             mensaje: "Producto creado",
             producto: nuevoProducto
         }))
 
     } catch (error) {
-        return res.status(500).json({ error: "Error al crear la bodega" });
+        return res.status(500).json({ error: "Error al crear la elproducto" });
     } finally {
 
-        console.log(`Se ha creado la bodega ${JSON.stringify(req.headers)}`);
+        console.log(`peticion header ${JSON.stringify(req.headers)}`);
 
     }
 

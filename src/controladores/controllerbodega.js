@@ -30,9 +30,7 @@ const listarproductos = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Error al crear la bodega" });
-  } finally {
-    console.log(`Se ha creado la bodega ${JSON.stringify(req.headers)}`);
-  }
+  } 
 }
 
 export default { createBodega , listarproductos };

@@ -2,6 +2,7 @@ import express from "express";
 
 /* controladores */
 import controllerbodega from "./controladores/controllerbodega.js";
+import controllerporducto from "./controladores/controllerporducto.js";
 
 const router = express.Router();
 
@@ -74,8 +75,53 @@ router.get("/bodegas", (req, res) => {
 })
 
 
-router.post("/productos", (req, res) => {
+// Ruta POST /productos para crear un producto
+/* 
 
+ recibe
+
+{
+  "nombre": "arroz",
+  "descripcion": "Arroz Blanco",
+  "estado": 1,
+  "cantidad": 10
+}
+
+devuelve
+
+{
+  "mensaje": "Producto creado",
+  "producto": {
+    "producto": {
+      "id": 63,
+      "nombre": "arroz",
+      "descripcion": "Arroz Blanco",
+      "estado": 1,
+      "created_by": null,
+      "updated_by": null,
+      "created_at": null,
+      "updated_at": null,
+      "deleted_at": null
+    },
+    "inventario": {
+      "id": 80,
+      "id_bodega": 11,
+      "id_producto": 63,
+      "cantidad": 10,
+      "created_by": null,
+      "updated_by": null,
+      "created_at": "2023-07-06T06:17:17.000Z",
+      "updated_at": null,
+      "deleted_at": null
+    }
+  }
+}
+
+
+*/
+
+router.post("/productos", (req, res) => {
+    controllerporducto.crearproducto(req, res)
 })
 
 

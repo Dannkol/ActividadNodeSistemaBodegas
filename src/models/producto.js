@@ -11,29 +11,43 @@ const getConnection = async () => {
 const insertProduct = async (nombre, descripcion, estado, cantidad) => {
 
     const bodegadefault = 11;
-
     const connection = await getConnection();
-    const query_productos = `INSERT INTO productos (nombre, descripcion, estado) VALUES (${nombre},${descripcion},${estado});`;
-    const [result_productos] = await connection.execute(query_productos);
 
-    const productoId = result_productos.insertId;
+    try {
 
-    const query_inventarios = `INSERT INTO inventarios ( id_bodega , id_producto , cantidad) VALUES (${bodegadefault},${productoId},${cantidad});`;
-    
-    const [result_inventarios] = await connection.execute(query_inventarios);
+        const query_productos = `INSERT INTO productos (nombre, descripcion, estado) VALUES ("${nombre}","${descripcion}",${estado});`;
+        const [result_productos] = await connection.execute(query_productos);
 
-    const [inventario] = await connection.query(
-        `SELECT * FROM inventarios WHERE id_bodega = ${result_inventarios.insertId};`
-    ) 
+        const productoId = result_productos.insertId;
 
-    const [porducto] = await connection.query(
-        `SELECT * FROM productos WHERE id = ${productoId};`
-    )
+        const query_inventarios = `INSERT INTO inventarios ( id_bodega , id_producto , cantidad) VALUES (${bodegadefault},${productoId},${cantidad});`;
 
-    return {
-        "producto": porducto[0],
-        "inventario" : inventario[0]
-    };
+        const [result_inventarios] = await connection.execute(query_inventarios);
+
+        const [inventario] = await connection.query(
+            `SELECT * FROM inventarios WHERE id = ${result_inventarios.insertId};`
+        )
+
+        const [porducto] = await connection.query(
+            `SELECT * FROM productos WHERE id = ${productoId};`
+        )
+
+        let obj = {
+            "producto": porducto[0],
+            "inventario": inventario[0]
+        };
+
+        console.log(obj);
+        return obj;
+
+    } catch (error) {
+        console.log(error);
+        throw error;
+    } finally {
+        connection.end();
+    }
+
+
 };
 
 export default { insertProduct };
