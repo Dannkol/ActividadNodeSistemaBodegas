@@ -4,6 +4,7 @@ import express from "express";
 import controllerbodega from "./controladores/controllerbodega.js";
 import controllerporducto from "./controladores/controllerporducto.js";
 import controllerinventarios from "./controladores/controllerinventarios.js";
+import controllertraslado from "./controladores/controllertraslado.js";
 
 const router = express.Router();
 
@@ -185,6 +186,52 @@ router.post("/inventario", (req, res) => {
     controllerinventarios.crearInventario(req, res)
 })
 
+
+// Ruta POST /traslado para realizar el traslado de productos entre bodejas
+
+/* 
+
+    el endpoint cuenta con varias validaciones que
+
+    recibe
+
+    {
+        "cantidad": 23,
+        "producto": 18,
+        "bodega_send": 19,
+        "bodega_to": 12
+    }
+
+    si el traslado es correcto devuelve
+
+    {
+        "menssage": "Traslado exitoso", Mensaje de exito
+        "data": {
+            "bodega_origen": 19, - bodega de origen
+            "bodega_destino": 12, - bodega de destino
+            "cantidad": 23, - cantidad trasladad de una bodega a otra
+            "historial": [ - tabla historial
+            {
+                "id": 35,
+                "cantidad": 23, 
+                "id_bodega_origen": 19,
+                "id_bodega_destino": 12,
+                "id_inventario": 12, - id del inventario relacionada con el historial
+                "created_by": null,
+                "updated_by": null,
+                "created_at": "2023-07-06T08:42:45.000Z",
+                "updated_at": null,
+                "deleted_at": null
+            }
+            ]
+        }
+    }
+
+*/
+
+router.post("/traslado", (req, res) => {
+    controllertraslado.traslados(req, res)
+})
 
 // Exportar el router
 export default router;
