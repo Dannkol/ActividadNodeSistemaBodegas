@@ -3,6 +3,7 @@ import express from "express";
 /* controladores */
 import controllerbodega from "./controladores/controllerbodega.js";
 import controllerporducto from "./controladores/controllerporducto.js";
+import controllerinventarios from "./controladores/controllerinventarios.js";
 
 const router = express.Router();
 
@@ -124,6 +125,65 @@ router.post("/productos", (req, res) => {
     controllerporducto.crearproducto(req, res)
 })
 
+
+// Ruta POST /inventario para crear nuevo inventario
+
+/* 
+
+    Dependiendo del caso el funcionamiento del endpoint cambia
+
+    recibe
+
+    {
+        "id_producto": 62,
+        "id_bodega": 13,
+        "cantidad": 2
+    }
+
+    si el inventario existe actualiza la cantidad y devuelve 
+
+    {
+        "mensaje": "actualizacion de inventario",
+        "inventario": [
+            {
+                "id": 82,
+                "id_bodega": 13,
+                "id_producto": 62,
+                "cantidad": 54,
+                "created_by": null,
+                "updated_by": null,
+                "created_at": "2023-07-06T07:19:58.000Z",
+                "updated_at": null,
+                "deleted_at": null
+            }
+        ]
+    }
+
+
+    Si el inventario no existe crea uno nuevo y devuelve
+
+    {
+        "mensaje": "crear nuevo inventario",
+        "inventario": [
+            {
+                "id": 83,
+                "id_bodega": 12,
+                "id_producto": 62,
+                "cantidad": 2,
+                "created_by": null,
+                "updated_by": null,
+                "created_at": "2023-07-06T07:26:01.000Z",
+                "updated_at": null,
+                "deleted_at": null
+            }
+        ]
+    }
+
+*/
+
+router.post("/inventario", (req, res) => {
+    controllerinventarios.crearInventario(req, res)
+})
 
 
 // Exportar el router
