@@ -47,8 +47,9 @@ const listarproductos = async () => {
 
 
         const producto = await connection.query( /* SQL */
-            ` SELECT t2.nombre AS "bodega" , SUM(t1.cantidad) AS "total", t1.id_producto AS "producto" FROM inventarios AS t1 
+            ` SELECT t2.nombre AS "bodega" , SUM(t1.cantidad) AS "total", t3.nombre AS "producto" FROM inventarios AS t1 
         INNER JOIN bodegas AS t2 ON t2.id = t1.id_bodega
+        INNER JOIN productos AS t3 ON t3.id = t1.id_producto
         GROUP BY t2.nombre, t1.id_producto
         ORDER BY total DESC`);
 

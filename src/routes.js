@@ -1,15 +1,27 @@
 import express from "express";
 
 /* controladores */
-import controllerbodega from "./controladores/controllerbodega.js";
-import controllerporducto from "./controladores/controllerporducto.js";
-import controllerinventarios from "./controladores/controllerinventarios.js";
-import controllertraslado from "./controladores/controllertraslado.js";
+import controllerbodega from "./controller/controllerbodega.js";
+import controllerporducto from "./controller/controllerporducto.js";
+import controllerinventarios from "./controller/controllerinventarios.js";
+import controllertraslado from "./controller/controllertraslado.js";
+
+/* Auth */
+
+import controllerauth from "./controller/controllerauth.js";
+import authenticateToken from "./middleware/authenticateToken.js";
+
 
 const router = express.Router();
 
+// Ruta POST /auth para auntenticar usuario
+
+router.post('/auth', (req, res) => {
+  controllerauth.authorization(req, res);
+})
+
 // Ruta de ejemplo: GET /
-router.get("/", (req, res) => {
+router.get("/", authenticateToken , (req, res) => {
     res.send("Api sistema de bodegas");
 });
 
@@ -17,7 +29,7 @@ router.get("/", (req, res) => {
 
 /* 
 
-recibe
+recibe junto con un jwt
 
 {
   "id_responsable" : 16,
@@ -41,7 +53,7 @@ devuelve
 
 */
 
-router.post("/bodegas", (req, res) =>{controllerbodega.createBodega(req, res)} );
+router.post("/bodegas", authenticateToken ,(req, res) =>{controllerbodega.createBodega(req, res)} );
 
 
 // Ruta GET /bodegas para listar totales de porductos
@@ -72,7 +84,7 @@ router.post("/bodegas", (req, res) =>{controllerbodega.createBodega(req, res)} )
 
 */
 
-router.get("/bodegas", (req, res) => {
+router.get("/bodegas", authenticateToken,(req, res) => {
     controllerbodega.listarproductos(req, res)
 })
 
@@ -122,7 +134,7 @@ devuelve
 
 */
 
-router.post("/productos", (req, res) => {
+router.post("/productos", authenticateToken,(req, res) => {
     controllerporducto.crearproducto(req, res)
 })
 
@@ -182,7 +194,7 @@ router.post("/productos", (req, res) => {
 
 */
 
-router.post("/inventario", (req, res) => {
+router.post("/inventario", authenticateToken,(req, res) => {
     controllerinventarios.crearInventario(req, res)
 })
 
@@ -229,7 +241,7 @@ router.post("/inventario", (req, res) => {
 
 */
 
-router.post("/traslado", (req, res) => {
+router.post("/traslado", authenticateToken ,(req, res) => {
     controllertraslado.traslados(req, res)
 })
 
