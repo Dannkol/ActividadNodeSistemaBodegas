@@ -9,8 +9,14 @@ import controllertraslado from "./controller/controllertraslado.js";
 /* Auth */
 
 import controllerauth from "./controller/controllerauth.js";
-import authenticateToken from "./middleware/authenticateToken.js";
 
+/* Middelware */
+
+import authenticateToken from "./middleware/authenticate_Token_DTO_Bodega.js";
+import authenticate_Token_DTO_Bodega from "./middleware/authenticate_Token_DTO_Bodega.js";
+import authenticate_Token_DTO_Porducto from "./middleware/authenticate_Token_DTO_Productos.js";
+import authenticate_Token_DTO_Inventario from "./middleware/authenticate_Token_DTO_Inventario.js";
+import authenticate_Token_DTO_Traslado from "./middleware/authenticate_Token_DTO_Traslado.js";
 
 const router = express.Router();
 
@@ -21,7 +27,7 @@ router.post('/auth', (req, res) => {
 })
 
 // Ruta de ejemplo: GET /
-router.get("/", authenticateToken , (req, res) => {
+router.get("/", (req, res) => {
     res.send("Api sistema de bodegas");
 });
 
@@ -53,7 +59,7 @@ devuelve
 
 */
 
-router.post("/bodegas", authenticateToken ,(req, res) =>{controllerbodega.createBodega(req, res)} );
+router.post("/bodegas", authenticate_Token_DTO_Bodega ,(req, res) =>{controllerbodega.createBodega(req, res)} );
 
 
 // Ruta GET /bodegas para listar totales de porductos
@@ -84,7 +90,7 @@ router.post("/bodegas", authenticateToken ,(req, res) =>{controllerbodega.create
 
 */
 
-router.get("/bodegas", authenticateToken,(req, res) => {
+router.get("/bodegas", authenticateToken ,(req, res) => {
     controllerbodega.listarproductos(req, res)
 })
 
@@ -134,7 +140,7 @@ devuelve
 
 */
 
-router.post("/productos", authenticateToken,(req, res) => {
+router.post("/productos", authenticate_Token_DTO_Porducto ,(req, res) => {
     controllerporducto.crearproducto(req, res)
 })
 
@@ -194,7 +200,7 @@ router.post("/productos", authenticateToken,(req, res) => {
 
 */
 
-router.post("/inventario", authenticateToken,(req, res) => {
+router.post("/inventario", authenticate_Token_DTO_Inventario ,(req, res) => {
     controllerinventarios.crearInventario(req, res)
 })
 
@@ -241,7 +247,7 @@ router.post("/inventario", authenticateToken,(req, res) => {
 
 */
 
-router.post("/traslado", authenticateToken ,(req, res) => {
+router.post("/traslado", authenticate_Token_DTO_Traslado ,(req, res) => {
     controllertraslado.traslados(req, res)
 })
 
