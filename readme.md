@@ -32,6 +32,19 @@ Ejecutar
 
 ## API Reference
 
+#### post authentication
+
+```http
+  POST /auth
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `nombre` | `string` | **Required**.  |
+| `password` | `string` | **Required**.  | 
+
+Devuelve el api key
+
 #### Get  devuelve los productos en forma descendente agrupados por bodegas ejemplo
 
 ```http
